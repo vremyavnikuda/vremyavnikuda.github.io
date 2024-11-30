@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en-us"
+  dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+
+
+
+<link rel="icon" type="image/ico" href="https://vremyavnikuda.github.io//favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://vremyavnikuda.github.io//favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://vremyavnikuda.github.io//favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="https://vremyavnikuda.github.io//android-chrome-192x192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://vremyavnikuda.github.io//apple-touch-icon.png">
+
+<meta name="description" content=""/>
+
+<title>
+    
+    Rust 1.83.0 Release | vremyavnikuda
+    
+</title>
+
+<link rel="canonical" href="https://vremyavnikuda.github.io/posts/new_release_rust_1_83_0/"/>
+
+<meta property="og:url" content="https://vremyavnikuda.github.io/posts/new_release_rust_1_83_0/">
+  <meta property="og:site_name" content="vremyavnikuda">
+  <meta property="og:title" content="Rust 1.83.0 Release">
+  <meta property="og:description" content="Добавлены новые возможности для константных контекстов
+Ссылки на статические переменные -&gt; Теперь константы могу ссылаться на неизменяемые статические переменный, что делает код более гибкими и уменьшает его количество ограничений при написании константных выражений.
+static S: i32 = 25; const C: &amp;i32 = &amp;S; fn main() { println!(&#34;Значение константы: {}&#34;, C); } но не будет работать так
+static mut S: i32 =0;const C: &amp;i32 = &amp;S так как нельзя ссылаться на мутабельную переменную в константе">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-11-30T00:00:00+00:00">
+    <meta property="article:modified_time" content="2024-11-30T00:00:00+00:00">
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/combined.min.186794b3399a702d3092949042cdc215dea303c17e71e7c0254768448de11db8.css" media="all">
+
+
+
+
+
+
+
+
+
+  </head>
+
+  
+
+  
+  
+  
+
+  <body class="auto">
+
+    <div class="content">
+      <header>
+        
+
+<div class="header">
+
+    
+
+    <h1 class="header-title">
+        <a href="https://vremyavnikuda.github.io/">vremyavnikuda</a>
+    </h1>
+
+    <div class="flex">
+        
+
+        
+        
+      
+        <p class="small ">
+            <a href="/" >
+                /home
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/posts" >
+                /posts
+            </a>
+        </p>
+        
+      
+        <p class="small ">
+            <a href="/about" >
+                /about
+            </a>
+        </p>
+        
+        
+    </div>
+
+    
+
+</div>
+
+      </header>
+
+      <main class="main">
+        
+
+
+
+
+
+<div class="breadcrumbs">
+    
+    <a href="/">Home</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a href="/posts/">Posts</a>
+    <span class="breadcrumbs-separator"> > </span>
+    
+    <a class="breadcrumbs-current" href="/posts/new_release_rust_1_83_0/">Rust 1.83.0 Release</a>
+</div>
+
+
+
+<div >
+
+  <div class="single-intro-container">
+
+    
+
+    <h1 class="single-title">Rust 1.83.0 Release</h1>
+    
+
+    
+
+    <p class="single-readtime">
+      
+      
+      
+      <time datetime="2024-11-30T00:00:00&#43;00:00">November 30, 2024</time>
+      
+
+      
+    </p>
+
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  <div class="single-content">
+    <p>Добавлены новые возможности для константных контекстов</p>
+<p>Ссылки на статические переменные -&gt; Теперь константы могу ссылаться на неизменяемые статические переменный, что делает код более гибкими и уменьшает его количество ограничений при написании константных выражений.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">static</span> S: <span style="font-weight:bold;text-decoration:underline">i32</span> = 25;
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">const</span> C: <span style="font-weight:bold;text-decoration:underline">&amp;</span><span style="font-weight:bold;text-decoration:underline">i32</span> = &amp;S;
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() { println!(<span style="color:#666;font-style:italic">&#34;Значение константы: </span><span style="color:#666;font-style:italic">{}</span><span style="color:#666;font-style:italic">&#34;</span>, C); }
+</span></span></code></pre></div><blockquote>
+<p>но не будет работать так</p>
+</blockquote>
+<pre tabindex="0"><code>static mut S: i32 =0;
+const C: &amp;i32 = &amp;S
+</code></pre><blockquote>
+<p>так как нельзя ссылаться на мутабельную переменную в константе</p>
+</blockquote>
+<hr>
+<p>Появилась возможность использовать мутабельные ссылки и указатели в контексте констант, что значительно расширяет возможности работы с <code>const fn</code> и другими вычислениями на этапе компиляции.</p>
+<p>Однако важно понимать, что эти мутабельные ссылки и указатели могут использоваться только внутри вычислений констант, но не могут быть частью конечного значения константы.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">inc</span>(x: <span style="font-weight:bold;text-decoration:underline">&amp;</span><span style="color:#666;font-weight:bold;font-style:italic">mut</span> <span style="font-weight:bold;text-decoration:underline">i32</span>) {
+</span></span><span style="display:flex;"><span>    *x += 1;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">make_mutable_reference</span>() -&gt; <span style="font-weight:bold;text-decoration:underline">i32</span> {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;text-decoration:underline">mut</span> val = 41;
+</span></span><span style="display:flex;"><span>    inc(&amp;<span style="font-weight:bold;text-decoration:underline">mut</span> val);
+</span></span><span style="display:flex;"><span>    val
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">const</span> C: <span style="font-weight:bold;text-decoration:underline">i32</span> = make_mutable_reference();
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#666;font-style:italic">&#34;Значение константы C: </span><span style="color:#666;font-style:italic">{}</span><span style="color:#666;font-style:italic">&#34;</span>, C);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><blockquote>
+<p>не нужно путать с примеров выше!!!</p>
+</blockquote>
+<p>Выражение, содержащее мутабельные ссылки, может быть вычислено на этапе компиляции, но нельзя использовать мутабельную ссылку как часть конечного значения константы:</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">const</span> C: <span style="font-weight:bold;text-decoration:underline">&amp;</span><span style="color:#666;font-weight:bold;font-style:italic">mut</span> <span style="font-weight:bold;text-decoration:underline">i32</span> = &amp;<span style="font-weight:bold;text-decoration:underline">mut</span> 4; <span style="color:#888;font-style:italic">// Ошибка: mutable references are not allowed in the final value of constants
+</span></span></span></code></pre></div><p>мутабельный указатель в константном контексте</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">use</span> std::cell::UnsafeCell;
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">const</span> <span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">modify_with_raw_pointer</span>() -&gt; <span style="font-weight:bold;text-decoration:underline">i32</span> {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> c = UnsafeCell::new(41);
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">unsafe</span> { *c.get() += 1 };
+</span></span><span style="display:flex;"><span>    c.into_inner()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">const</span> C: <span style="font-weight:bold;text-decoration:underline">i32</span> = modify_with_raw_pointer();
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#666;font-style:italic">&#34;Значение константы C: </span><span style="color:#666;font-style:italic">{}</span><span style="color:#666;font-style:italic">&#34;</span>, C);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Но это все еще с ограничениями для обеспечения безопастности типов и предотвращения небезопасных операций.</p>
+<hr>
+<p>Стабилизация новых методов для коллекций</p>
+<blockquote>
+<p>Option::unwrap_unchecked</p>
+</blockquote>
+<blockquote>
+<p>Option::replace</p>
+</blockquote>
+<p>расширяют возможности обработки значений, что делает код более выразительным и удобным.</p>
+<p>Изменения касается стабилизации методов для работы с сырыми указателями и мутабельными ячейками, что указывает на улучшения для низкоуровневых операций и работы с памятью.</p>
+<hr>
+<p>Новые ошибки в <code>ErrorKind</code> улучшают поддержку работы с файловыми системами, что делает работу с низкоуровневыми операциями более безопасной и предсказуемой.</p>
+<p>Оптимизированна работа</p>
+<blockquote>
+<p>ptr::replace</p>
+</blockquote>
+<blockquote>
+<p>ptr::slice_from_raw_parts_mut</p>
+</blockquote>
+<p>для работы с сырыми указателями для модификации данных в массивах или срезах без необходимости копировать их.</p>
+<hr>
+<p>Исправлены</p>
+<blockquote>
+<p>slice::from_mut</p>
+</blockquote>
+<blockquote>
+<p>slice::from_raw_parts_mut</p>
+</blockquote>
+<p>для работы с мутабельными срезами, позволяющие изменять данные в массивах или срезах без необходимости копировать их.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#888;font-style:italic">//выглядит теперь это так
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span><span style="font-weight:bold;text-decoration:underline">use</span> std::ptr;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;text-decoration:underline">mut</span> arr = [1, 2, 3, 4, 5];
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> ptr = arr.as_mut_ptr();
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">unsafe</span> {
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> slice = std::slice::from_raw_parts_mut(ptr, arr.len());
+</span></span><span style="display:flex;"><span>        slice[0] = 10;
+</span></span><span style="display:flex;"><span>        slice[4] = 20;
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#666;font-style:italic">&#34;Изменённый массив: </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic">&#34;</span>, arr); 
+</span></span><span style="display:flex;"><span>        <span style="color:#888;font-style:italic">// Выведет: [10, 2, 3, 4, 20]
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Обратите внимание что этот код находится внутри небезопастного блока <code>unsafe</code>,по скольку работа с сырыми указателями требует явного размешения на безопастный код.</p>
+<hr>
+<blockquote>
+</blockquote>
+<blockquote>
+</blockquote>
+<p>Эти методы позволяют безопасно получать мутабельные ссылки на первый и последний элементы среза или массива.
+пример как теперь это работает</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;text-decoration:underline">mut</span> arr = [1, 2, 3, 4, 5];
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">if</span> <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;font-style:italic">Some</span>(first) = arr.first_mut() {
+</span></span><span style="display:flex;"><span>        *first = 10;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    println!(<span style="color:#666;font-style:italic">&#34;Изменённый массив: </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic">&#34;</span>, arr); 
+</span></span><span style="display:flex;"><span>    <span style="color:#888;font-style:italic">// Выведет: [10, 2, 3, 4, 5]
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span>}
+</span></span></code></pre></div><hr>
+<blockquote>
+<p>Option::get_or_insert_default</p>
+</blockquote>
+<p>Теперь позволяет вставить значение по умолчанию в <code>Option</code>, если оно ещё не инициализировано (то есть если <code>Option</code> является <code>None</code>).</p>
+<p>Эта функция полезна, например, при работе с кэшами, коллекциями или в ситуациях, где вы хотите гарантировать, что значение существует, и при необходимости инициализировать его значением по умолчанию.</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">use</span> std::collections::HashMap;
+</span></span><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;text-decoration:underline">mut</span> cache: <span style="font-weight:bold;font-style:italic">Option</span>&lt;HashMap&lt;<span style="font-weight:bold;font-style:italic">String</span>, <span style="font-weight:bold;text-decoration:underline">i32</span>&gt;&gt; = <span style="font-weight:bold;font-style:italic">None</span>;
+</span></span><span style="display:flex;"><span>    cache.get_or_insert_default().insert(<span style="color:#666;font-style:italic">&#34;apple&#34;</span>.to_string(), 5);
+</span></span><span style="display:flex;"><span>    cache.get_or_insert_default().insert(<span style="color:#666;font-style:italic">&#34;banana&#34;</span>.to_string(), 7);
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">if</span> <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;font-style:italic">Some</span>(map) = cache {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#666;font-style:italic">&#34;Кэш: </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic">&#34;</span>, map);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//пример работы с вектором
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic"></span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;text-decoration:underline">mut</span> nums: <span style="font-weight:bold;font-style:italic">Option</span>&lt;<span style="font-weight:bold;font-style:italic">Vec</span>&lt;<span style="font-weight:bold;text-decoration:underline">i32</span>&gt;&gt; = <span style="font-weight:bold;font-style:italic">None</span>;
+</span></span><span style="display:flex;"><span>    nums.get_or_insert_default().push(10);
+</span></span><span style="display:flex;"><span>    nums.get_or_insert_default().push(20);
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">if</span> <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> <span style="font-weight:bold;font-style:italic">Some</span>(vec) = nums {
+</span></span><span style="display:flex;"><span>        println!(<span style="color:#666;font-style:italic">&#34;Вектор: </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic">&#34;</span>, vec);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><hr>
+<p>Методы для работы с числами и строками:</p>
+<blockquote>
+<p>char::MIN:</p>
+</blockquote>
+<p>Минимальный символ, доступный в языке.</p>
+<blockquote>
+<p>{float}::classify</p>
+</blockquote>
+<blockquote>
+<p>{float}::is_finite</p>
+</blockquote>
+<blockquote>
+<p>{float}::is_infinite</p>
+</blockquote>
+<p>и другие:</p>
+<p>Стабилизированные методы для работы с числами с плавающей точкой, включая проверку на бесконечность, нормальность и другие атрибуты.</p>
+<hr>
+<blockquote>
+<p>str::as_mut_ptr
+str::from_utf8_unchecked_mut</p>
+</blockquote>
+<p>Методы для работы с мутабельными строками, которые могут быть полезны в высокопроизводительных приложениях, где требуется манипуляция строками без излишних проверок.</p>
+<p>как теперь это работает в 1.83.0</p>
+<blockquote>
+<p>f32::classify и f64::classify`</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> numbers = [3.14, 0.0, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">INFINITY</span>, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">NEG_INFINITY</span>, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">NAN</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">for</span> &amp;num <span style="font-weight:bold;text-decoration:underline">in</span> &amp;numbers {
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold;text-decoration:underline">match</span> num.classify() {
+</span></span><span style="display:flex;"><span>            std::num::FpCategory::Normal =&gt; println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> нормальное&#34;</span>, num),
+</span></span><span style="display:flex;"><span>            std::num::FpCategory::Subnormal =&gt; println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> поднормальное&#34;</span>, num),
+</span></span><span style="display:flex;"><span>            std::num::FpCategory::Zero =&gt; println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> равно нулю&#34;</span>, num),
+</span></span><span style="display:flex;"><span>            std::num::FpCategory::Infinite =&gt; println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> бесконечность&#34;</span>, num),
+</span></span><span style="display:flex;"><span>            std::num::FpCategory::Nan =&gt; println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> NaN&#34;</span>, num),
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число 3.14 нормальное
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число 0.0 равно нулю
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число inf бесконечность
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число -inf бесконечность
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число NaN NaN
+</span></span></span></code></pre></div><blockquote>
+<p>f32::is_finite и f64::is_finite`</p>
+</blockquote>
+<p>Метод <code>is_finite</code> проверяет, является ли число конечным (не бесконечностью или <code>NaN</code>).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> numbers = [3.14, 0.0, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">INFINITY</span>, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">NEG_INFINITY</span>, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">NAN</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">for</span> &amp;num <span style="font-weight:bold;text-decoration:underline">in</span> &amp;numbers {
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold;text-decoration:underline">if</span> num.is_finite() {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> конечное&#34;</span>, num);
+</span></span><span style="display:flex;"><span>        } <span style="font-weight:bold;text-decoration:underline">else</span> {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> не конечное&#34;</span>, num);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число 3.14 конечное
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число 0.0 конечное
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число inf не конечное
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число -inf не конечное
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число NaN не конечное
+</span></span></span></code></pre></div><blockquote>
+<p>f32::is_infinite и f64::is_infinite`</p>
+</blockquote>
+<p>Метод <code>is_infinite</code> проверяет, является ли число бесконечностью (положительной или отрицательной).</p>
+<div class="highlight"><pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="font-weight:bold;text-decoration:underline">fn</span> <span style="color:#666;font-weight:bold;font-style:italic">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;font-style:italic;text-decoration:underline">let</span> numbers = [3.14, 0.0, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">INFINITY</span>, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">NEG_INFINITY</span>, <span style="font-weight:bold;text-decoration:underline">f32</span>::<span style="color:#666;font-weight:bold;font-style:italic">NAN</span>];
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="font-weight:bold;text-decoration:underline">for</span> &amp;num <span style="font-weight:bold;text-decoration:underline">in</span> &amp;numbers {
+</span></span><span style="display:flex;"><span>        <span style="font-weight:bold;text-decoration:underline">if</span> num.is_infinite() {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> бесконечность&#34;</span>, num);
+</span></span><span style="display:flex;"><span>        } <span style="font-weight:bold;text-decoration:underline">else</span> {
+</span></span><span style="display:flex;"><span>            println!(<span style="color:#666;font-style:italic">&#34;Число </span><span style="color:#666;font-style:italic">{:?}</span><span style="color:#666;font-style:italic"> не бесконечность&#34;</span>, num);
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число 3.14 не бесконечность
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число 0.0 не бесконечность
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число inf бесконечность
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число -inf бесконечность
+</span></span></span><span style="display:flex;"><span><span style="color:#888;font-style:italic">//Число NaN не бесконечность
+</span></span></span></code></pre></div>
+    
+  </div>
+
+  
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+  <div class="back-to-top">
+    <a href="#top">
+      back to top
+    </a>
+  </div>
+  
+
+</div>
+
+
+      </main>
+    </div>
+
+    <footer>
+      
+
+    
+    <p>Powered by
+        <a href="https://github.com/vremyavnikuda">vremyavnikuda</a>
+    </p>
+    
+    
+    
+
+
+    </footer>
+
+    
+
+  </body>
+
+  <script>
+
+  function isAuto() {
+    return document.body.classList.contains("auto");
+  }
+
+  function setTheme() {
+    if (!isAuto()) {
+      return
+    }
+
+    document.body.classList.remove("auto");
+    let cls = "light";
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      cls = "dark";
+    }
+
+    document.body.classList.add(cls);
+  }
+
+  function invertBody() {
+    document.body.classList.toggle("dark");
+    document.body.classList.toggle("light");
+  }
+
+  if (isAuto()) {
+    window.matchMedia('(prefers-color-scheme: dark)').addListener(invertBody);
+  }
+
+  setTheme();
+
+</script>
+
+</html>
