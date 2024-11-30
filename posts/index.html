@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <title>
+Posts | vremyavnikuda
+</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Your website description">
+
+<meta name="generator" content="Hugo 0.139.0">
+
+
+<link rel="canonical" href="https://vremyavnikuda.github.io/posts/" >
+  <link href="https://vremyavnikuda.github.io/posts/index.xml" rel="alternate" type="application/rss+xml" title="vremyavnikuda" >
+  <link href="https://vremyavnikuda.github.io/posts/index.xml" rel="feed" type="application/rss+xml" title="vremyavnikuda" >
+
+
+
+
+<link href="/css/style.min.36c061153203db94fc1169914d07c49c3a537a11316e9ffbd4c7a511df482d8d.css" rel="stylesheet">
+
+
+
+
+</head>
+
+<body>
+
+    <div class="flexWrapper">
+        <header class="headerWrapper">
+    <div class="header">
+        <div>
+            <a class="terminal" href="https://vremyavnikuda.github.io/">
+                <span>github.com/@vremyavnikuda ~ $</span>
+            </a>
+        </div>
+        <input class="side-menu" type="checkbox" id="side-menu">
+        <label class="hamb" for="side-menu"><span class="hamb-line"></span></label>
+        <nav class="headerLinks">
+            <ul>
+                
+                <li>
+                    <a href="https://vremyavnikuda.github.io/about" title="" >
+                        ~/about</a>
+                </li>
+                
+                <li>
+                    <a href="https://vremyavnikuda.github.io/posts" title="" >
+                        ~/posts</a>
+                </li>
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <main class="main">
+                
+
+<div>
+    <div class="listHeader">
+        <h1>Posts</h1>
+    </div>
+
+    
+
+    <div>
+        
+
+        <a class="postListLink" href="https://vremyavnikuda.github.io/posts/%D1%80%D0%B5%D1%86%D0%B5%D0%BD%D0%B7%D0%B8%D1%8F-%D0%BD%D0%B0-%D1%80%D0%B5%D0%BB%D0%B8%D0%B7-rust-1.83.0/">
+            
+            <div class="postListItem" role="listitem">
+                <div class="postHeader">
+                    <span class="postTitle"></span>
+                    
+                    <time class="postDate" datetime="0001-01-01">January 1, 1</time>
+                </div>
+                <div class="postExcerpt">
+                    <p><p>Что в релизе 1.83.0</p>
+<p>Добавлены новые возможности для константных контекстов
+Ссылки на статические переменные -&gt; Теперь константы могу ссылаться на неизменяемые статические переменный, что делает код более гибкими и уменьшает его количество ограничений при написании константных выражений.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> S: <span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">25</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> C: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>S;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() { println!(<span style="color:#e6db74">&#34;Значение константы: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, C); }
+</span></span></code></pre></div><p>Но не будет работать так</p>
+<pre tabindex="0"><code>static mut S: i32 =0;
+const C: &amp;i32 = &amp;S
+</code></pre><p>Так как нельзя ссылаться на мутабельную переменную в константе</p></p>
+                </div>
+            </div>
+        </a>
+
+
+        
+    </div>
+</div>
+
+
+            </main>
+        </div>
+
+
+        <footer class="footer">
+    
+        <span>
+            © 2024 vremyavnikuda, Built with
+            <a href="https://gohugo.io" class="footerLink">Hugo</a> and
+            <a href="https://github.com/LordMathis/hugo-theme-nightfall" class="footerLink">Nightfall</a> theme
+        </span>
+    
+</footer>
+    </div>
+
+</body>
+
+</html>
