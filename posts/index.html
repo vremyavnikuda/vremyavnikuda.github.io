@@ -76,21 +76,26 @@ Posts | vremyavnikuda
             
             <div class="postListItem" role="listitem">
                 <div class="postHeader">
-                    <span class="postTitle"></span>
+                    <span class="postTitle">Rust 1.83.0 Release</span>
                     
-                    <time class="postDate" datetime="0001-01-01">January 1, 1</time>
+                    <time class="postDate" datetime="2024-11-30">November 30, 2024</time>
                 </div>
                 <div class="postExcerpt">
-                    <p><p>Что в релизе 1.83.0</p>
-<p>Добавлены новые возможности для константных контекстов
-Ссылки на статические переменные -&gt; Теперь константы могу ссылаться на неизменяемые статические переменный, что делает код более гибкими и уменьшает его количество ограничений при написании константных выражений.</p>
+                    <p><p>Добавлены новые возможности для константных контекстов</p>
+<p>Ссылки на статические переменные -&gt; Теперь константы могу ссылаться на неизменяемые статические переменный, что делает код более гибкими и уменьшает его количество ограничений при написании константных выражений.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> S: <span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> <span style="color:#ae81ff">25</span>;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> C: <span style="color:#66d9ef">&amp;</span><span style="color:#66d9ef">i32</span> <span style="color:#f92672">=</span> <span style="color:#f92672">&amp;</span>S;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() { println!(<span style="color:#e6db74">&#34;Значение константы: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, C); }
-</span></span></code></pre></div><p>Но не будет работать так</p>
+</span></span></code></pre></div><blockquote>
+<p>но не будет работать так</p>
+</blockquote>
 <pre tabindex="0"><code>static mut S: i32 =0;
 const C: &amp;i32 = &amp;S
-</code></pre><p>Так как нельзя ссылаться на мутабельную переменную в константе</p></p>
+</code></pre><blockquote>
+<p>так как нельзя ссылаться на мутабельную переменную в константе</p>
+</blockquote>
+<hr>
+<p>Появилась возможность использовать мутабельные ссылки и указатели в контексте констант, что значительно расширяет возможности работы с <code>const fn</code> и другими вычислениями на этапе компиляции.</p></p>
                 </div>
             </div>
         </a>
@@ -108,9 +113,7 @@ const C: &amp;i32 = &amp;S
         <footer class="footer">
     
         <span>
-            © 2024 vremyavnikuda, Built with
-            <a href="https://gohugo.io" class="footerLink">Hugo</a> and
-            <a href="https://github.com/LordMathis/hugo-theme-nightfall" class="footerLink">Nightfall</a> theme
+            © 2024 vremyavnikuda
         </span>
     
 </footer>
